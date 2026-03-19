@@ -9,6 +9,8 @@ namespace IMDBImport
 {
 	public class NormalInserter : IInserter
 	{
+		public void InsertGenres(List<Genre_Model> genres, SqlConnection sqlConn) { throw new NotImplementedException(); }
+
 		public void InsertTitles(List<Title_Model> titles, SqlConnection sqlConn)
 		{
 			foreach (Title_Model movie in titles)

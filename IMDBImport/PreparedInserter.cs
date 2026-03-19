@@ -11,24 +11,32 @@ namespace IMDBImport
 	{
 		public void InsertGenres(List<Genre_Model> genres, SqlConnection sqlConn)
 		{
-			string query = "INSERT INTO Genres (" +
-						   "TConst, " +
-						   "Genre)" +
-						   "VALUES (@TConst, @Genre)";
-			SqlCommand sqlComm = new SqlCommand(query, sqlConn);
-			sqlComm.Prepare();
 			foreach (Genre_Model genre in genres)
 			{
-				sqlComm.Parameters.AddWithValue("@TConst", genre.TConst);
-				sqlComm.Parameters.AddWithValue("@Genre", genre.Genre);
-			}
-			try
-			{
-				sqlComm.ExecuteNonQuery();
-			}
-			catch (SqlException ex)
-			{
-				Console.WriteLine("Error inserting query:\r\n" + query);
+				string query = "INSERT INTO Title_Genres (" +
+							   "TConst, " +
+							   "Genre)" +
+							   "VALUES (@TConst, @Genre)";
+				SqlCommand sqlComm = new SqlCommand(query, sqlConn);
+				sqlComm.Prepare();
+				{
+					sqlComm.Parameters.AddWithValue("@TConst", genre.TConst);
+					sqlComm.Parameters.AddWithValue("@Genre", genre.Genre);
+					try
+					{
+						sqlComm.ExecuteNonQuery();
+					}
+					catch (SqlException sqlex)
+					{
+						Console.WriteLine("Error inserting new query: \r\n" + query);
+						Console.WriteLine(sqlex.Message);
+						Console.WriteLine("Parameters:");
+						foreach (SqlParameter param in sqlComm.Parameters)
+						{
+							Console.WriteLine($"{param.ParameterName}: {param.Value}");
+						}
+					}
+				}
 			}
 		}
 

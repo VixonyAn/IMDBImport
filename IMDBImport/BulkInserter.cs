@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,6 +11,7 @@ namespace IMDBImport
 {
 	public class BulkInserter : IInserter
 	{
+		public void InsertGenres(List<Genre_Model> genres, SqlConnection sqlConn) { throw new NotImplementedException(); }
 		public void InsertTitles(List<Title_Model> titles, SqlConnection sqlConn)
 		{
 			DataTable titleTable = new DataTable();
