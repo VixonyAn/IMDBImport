@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMDBImport
+namespace IMDBImport.Models
 {
 	public class Genre_Model
 	{

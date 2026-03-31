@@ -1,4 +1,5 @@
 ﻿using IMDBImport;
+using IMDBImport.Models;
 using Microsoft.Data.SqlClient;
 
 // what we are working with
@@ -41,6 +42,8 @@ foreach (string movie in File.ReadLines("C:/temp/title.basics.tsv").Skip(1).Take
 	}
 }
 
+//locate name file and SKIP anyone with no Profession or Title
+
 /*
 // print movies
 foreach (var movie in movies)
@@ -63,7 +66,7 @@ SqlConnection sqlConn = new SqlConnection(
 //sqlConn.Close();
 
 sqlConn.Open();
-//preparedInserter.InsertTitles(movies, sqlConn);
+preparedInserter.InsertTitles(movies, sqlConn);
 preparedInserter.InsertGenres(genres, sqlConn);
 sqlConn.Close();
 
