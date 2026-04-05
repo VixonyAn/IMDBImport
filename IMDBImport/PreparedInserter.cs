@@ -156,7 +156,55 @@ namespace IMDBImport
 				}
 			}
 		}
-		public void InsertCrewDirectors(List<CrewDirector_Model> crewDirectors, SqlConnection sqlConn) { throw new NotImplementedException(); }
-		public void InsertCrewWriters(List<CrewWriter_Model> crewWriters, SqlConnection sqlConn) { throw new NotImplementedException(); }
+		public void InsertCrewDirectors(List<CrewDirector_Model> crewDirectors, SqlConnection sqlConn)
+		{
+			string query = "INSERT INTO Crew_Directors (" +
+							"NConst, " +
+							"TConst) " +
+								"VALUES (@NConst, @TConst)";
+			SqlCommand sqlComm = new SqlCommand(query, sqlConn);
+			sqlComm.Prepare();
+
+			foreach (CrewDirector_Model director in crewDirectors)
+			{
+				sqlComm.Parameters.Clear();
+				sqlComm.Parameters.AddWithValue("@TConst", director.TConst);
+				sqlComm.Parameters.AddWithValue("@NConst", director.NConst);
+
+				try
+				{
+					sqlComm.ExecuteNonQuery();
+				}
+				catch (SqlException ex)
+				{
+					Console.WriteLine($"Error inserting crew director: {ex.Message}");
+				}
+			}
+		}
+		public void InsertCrewWriters(List<CrewWriter_Model> crewWriters, SqlConnection sqlConn)
+		{
+			string query = "INSERT INTO Crew_Writers (" +
+				"NConst, " +
+				"TConst) " +
+					"VALUES (@NConst, @TConst)";
+			SqlCommand sqlComm = new SqlCommand(query, sqlConn);
+			sqlComm.Prepare();
+
+			foreach (CrewWriter_Model writer in crewWriters)
+			{
+				sqlComm.Parameters.Clear();
+				sqlComm.Parameters.AddWithValue("@TConst", writer.TConst);
+				sqlComm.Parameters.AddWithValue("@NConst", writer.NConst);
+
+				try
+				{
+					sqlComm.ExecuteNonQuery();
+				}
+				catch (SqlException ex)
+				{
+					Console.WriteLine($"Error inserting crew writer: {ex.Message}");
+				}
+			}
+		}
 	}
 }

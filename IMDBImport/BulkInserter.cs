@@ -4,6 +4,7 @@ using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,7 +119,37 @@ namespace IMDBImport
 				DestinationTableName = "Name_Professions"
 			};
 		}
-		public void InsertCrewDirectors(List<CrewDirector_Model> crewDirectors, SqlConnection sqlConn) { throw new NotImplementedException(); }
-		public void InsertCrewWriters(List<CrewWriter_Model> crewWriters, SqlConnection sqlConn) { throw new NotImplementedException(); }
+		public void InsertCrewDirectors(List<CrewDirector_Model> crewDirectors, SqlConnection sqlConn)
+		{
+			DataTable crewDirectorTable = new DataTable();
+			crewDirectorTable.Columns.Add("TConst", typeof(int));
+			crewDirectorTable.Columns.Add("NConst", typeof(int));
+
+			foreach (CrewDirector_Model director in crewDirectors)
+			{
+				crewDirectorTable.Rows.Add(director.TConst, director.NConst);
+			}
+			SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConn)
+			{
+				DestinationTableName = "Crew_Directors"
+			};
+			bulkCopy.WriteToServer(crewDirectorTable);
+		}
+		public void InsertCrewWriters(List<CrewWriter_Model> crewWriters, SqlConnection sqlConn)
+		{
+			DataTable crewWriterTable = new DataTable();
+			crewWriterTable.Columns.Add("TConst", typeof(int));
+			crewWriterTable.Columns.Add("NConst", typeof(int));
+
+			foreach (CrewWriter_Model writer in crewWriters)
+			{
+				crewWriterTable.Rows.Add(writer.TConst, writer.NConst);
+			}
+			SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConn)
+			{
+				DestinationTableName = "Crew_Writers"
+			};
+			bulkCopy.WriteToServer(crewWriterTable);
+		}
 	}
 }
